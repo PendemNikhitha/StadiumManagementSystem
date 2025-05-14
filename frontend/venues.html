@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venues | InstantTicketHub</title>
+  <link rel="stylesheet" href="welstyles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Instant<span>TicketHub</span></div>
+        <ul class="nav-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="venues.html" class="active">Venues</a></li>
+          <li><a href="my-tickets.html">My Tickets</a></li>
+          <li><a href="account.html">Account</a></li>
+        </ul>
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" class="theme-toggle">
+          <i class="fas fa-sun"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Our Venues</h1>
+      
+      <!-- Search Bar -->
+      <div class="search-section">
+        <div class="search-bar">
+          <input type="text" id="venue-search" placeholder="Search venues by name, location...">
+          <button type="button" id="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="location-filter">Location</label>
+          <select id="location-filter">
+            <option value="">All Locations</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="capacity-filter">Capacity</label>
+          <select id="capacity-filter">
+            <option value="">Any Capacity</option>
+            <option value="0-1000">Under 1,000</option>
+            <option value="1000-5000">1,000 - 5,000</option>
+            <option value="5000-10000">5,000 - 10,000</option>
+            <option value="10000+">Above 10,000</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="facility-filter">Facilities</label>
+          <select id="facility-filter">
+            <option value="">All Facilities</option>
+            <option value="parking">Parking</option>
+            <option value="food">Food & Beverages</option>
+            <option value="wifi">Wi-Fi</option>
+            <option value="accessibility">Accessibility</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+        <button class="btn btn-secondary" id="reset-filters">Reset</button>
+      </div>
+      
+      <div id="error-message" class="error-message" style="display: none;"></div>
+      
+      <div id="loading-state" class="loading">
+        <div class="spinner"></div>
+        <p>Loading venues...</p>
+      </div>
+      
+      <div class="venues-grid" id="venues-container">
+        <!-- Venues will be loaded here by JavaScript -->
+      </div>
+      
+      <!-- No Results Message -->
+      <div id="no-results" class="no-results" style="display: none;">
+        <i class="fas fa-theater-masks"></i>
+        <p>No venues found matching your criteria.</p>
+        <button class="btn btn-secondary" onclick="resetFilters()">Reset Filters</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <div class="logo">Instant<span>TicketHub</span></div>
+          <p>Your fast track to amazing events.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="venues.html">Venues</a></li>
+            <li><a href="my-tickets.html">My Tickets</a></li>
+            <li><a href="account.html">Account</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-envelope"></i> support@instantticket.com</p>
+          <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 InstantTicketHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="venues.js"></script>
+</body>
+</html>

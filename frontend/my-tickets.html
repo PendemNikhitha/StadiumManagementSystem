@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tickets | InstantTicketHub</title>
+    <link rel="stylesheet" href="welstyles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Instant<span>TicketHub</span></div>
+                <ul class="nav-links">
+                    <li><a href="home.html" class="nav-link">Home</a></li>
+                    <li><a href="events.html" class="nav-link">Events</a></li>
+                    <li><a href="venues.html" class="nav-link">Venues</a></li>
+                    <li><a href="my-tickets.html" class="nav-link active">My Tickets</a></li>
+                    <li><a href="account.html" class="nav-link">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">My Tickets</h1>
+            
+            <div id="user-not-logged-in" style="display: none;">
+                <div class="login-prompt">
+                    <h2>Please Login to View Your Tickets</h2>
+                    <p>You need to be logged in to view your ticket bookings.</p>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                    <p class="small-text">Don't have an account? <a href="register.html">Sign up</a></p>
+                </div>
+            </div>
+            
+            <div id="user-logged-in" style="display: none;">
+                <div class="tickets-filter">
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All Bookings</button>
+                        <button class="filter-btn" data-filter="upcoming">Upcoming Events</button>
+                        <button class="filter-btn" data-filter="past">Past Events</button>
+                        <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+                    </div>
+                    <div class="ticket-search">
+                        <input type="text" id="ticket-search" placeholder="Search bookings...">
+                    </div>
+                </div>
+                
+                <div id="tickets-loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading your tickets...</p>
+                </div>
+                
+                <div id="tickets-error" class="error-message" style="display: none;"></div>
+                
+                <div id="no-tickets" class="no-data" style="display: none;">
+                    <div class="no-data-content">
+                        <div class="no-data-icon">🎫</div>
+                        <h2>No Tickets Found</h2>
+                        <p>You haven't booked any tickets yet.</p>
+                        <a href="events.html" class="btn btn-primary">Browse Events</a>
+                    </div>
+                </div>
+                
+                <div id="tickets-container" class="tickets-list" style="display: none;">
+                    <!-- Tickets will be loaded here by my-tickets.js -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for ticket details and options -->
+    <div id="ticket-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="ticket-details">
+                <!-- Ticket details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button id="download-ticket" class="btn btn-secondary">Download Ticket</button>
+                <button id="cancel-booking" class="btn btn-danger">Cancel Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <span class="close-confirm-modal">&times;</span>
+            <h2>Confirm Cancellation</h2>
+            <p>Are you sure you want to cancel this booking?</p>
+            <div class="modal-buttons">
+                <button id="confirm-cancel-no" class="btn btn-secondary">No, Keep It</button>
+                <button id="confirm-cancel-yes" class="btn btn-danger">Yes, Cancel Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">Instant<span>TicketHub</span></div>
+                    <p>Your fast track to amazing events.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="venues.html">Venues</a></li>
+                        <li><a href="my-tickets.html">My Tickets</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p>Email: support@instantticket.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 InstantTicketHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="my-tickets.js"></script>
+</body>
+</html>

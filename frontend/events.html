@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | InstantTicketHub</title>
+    <link rel="stylesheet" href="welstyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Instant<span>TicketHub</span></div>
+                <ul class="nav-links">
+                    <li><a href="home.html" class="nav-link">Home</a></li>
+                    <li><a href="events.html" class="nav-link active">Events</a></li>
+                    <li><a href="venues.html" class="nav-link">Venues</a></li>
+                    <li><a href="my-tickets.html" class="nav-link">My Tickets</a></li>
+                    <li><a href="account.html" class="nav-link">Account</a></li>
+                </ul>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Upcoming Events</h1>
+            
+            <!-- Search Bar -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="event-search" placeholder="Search events by name, venue, or location...">
+                    <button type="button" id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="event-category">Category</label>
+                    <select id="event-category">
+                        <option value="">All Categories</option>
+                        <option value="sports">Sports</option>
+                        <option value="concerts">Concerts</option>
+                        <option value="theater">Theater</option>
+                        <option value="conferences">Conferences</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="event-date">Date</label>
+                    <input type="date" id="event-date">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="event-location">Location</label>
+                    <select id="event-location">
+                        <option value="">All Locations</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="price-range">Price Range</label>
+                    <select id="price-range">
+                        <option value="">Any Price</option>
+                        <option value="0-500">Under ₹500</option>
+                        <option value="500-1000">₹500 - ₹1000</option>
+                        <option value="1000-2000">₹1000 - ₹2000</option>
+                        <option value="2000+">Above ₹2000</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+                <button class="btn btn-secondary" id="reset-filters">Reset</button>
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading events...</p>
+            </div>
+            
+            <div class="events-grid" id="event-list">
+                <!-- Events will be loaded here by events.js -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">Instant<span>TicketHub</span></div>
+                    <p>Your fast track to amazing events.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="venues.html">Venues</a></li>
+                        <li><a href="my-tickets.html">My Tickets</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@instantticket.com</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 InstantTicketHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- First load the filtering functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingIndicator = document.getElementById('loading');
+            const locationFilter = document.getElementById('event-location');
+            
+            // Populate location dropdown from available stadiums
+            try {
+                const response = await fetch('http://localhost:5000/stadiums');
+                if (response.ok) {
+                    const stadiums = await response.json();
+                    
+                    // Add unique locations to dropdown
+                    const locations = new Set();
+                    stadiums.forEach(stadium => {
+                        if (stadium.location) locations.add(stadium.location);
+                    });
+                    
+                    locations.forEach(location => {
+                        const option = document.createElement('option');
+                        option.value = location;
+                        option.textContent = location;
+                        locationFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading stadium locations:', error);
+            }
+            
+            // Setup filter button to reload events with filters
+            document.getElementById('search-events').addEventListener('click', () => {
+                // Get filter values
+                const category = document.getElementById('event-category').value;
+                const date = document.getElementById('event-date').value;
+                const location = document.getElementById('event-location').value;
+                
+                // Build query parameters
+                const queryParams = new URLSearchParams();
+                if (category) queryParams.append('category', category);
+                if (date) queryParams.append('date', date);
+                if (location) queryParams.append('location', location);
+                
+                // Update events list using the filters
+                loadFilteredEvents(queryParams);
+            });
+            
+            // Function to load filtered events
+            async function loadFilteredEvents(queryParams) {
+                const eventList = document.getElementById('event-list');
+                const errorMessage = document.getElementById('error-message');
+                
+                // Show loading indicator
+                loadingIndicator.style.display = 'block';
+                errorMessage.style.display = 'none';
+                eventList.innerHTML = '';
+                
+                try {
+                    const res = await fetch(`http://localhost:5000/events?${queryParams}`);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+                    
+                    const events = await res.json();
+                    
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    
+                    if (events.length === 0) {
+                        eventList.innerHTML = '<p class="no-results">No events found matching your criteria. Try adjusting your filters.</p>';
+                        return;
+                    }
+                    
+                    // Display events
+                    events.forEach(event => {
+                        // Get stadium information safely
+                        const stadiumName = event.stadiumId?.name || 'TBA';
+                        const stadiumLocation = event.stadiumId?.location || 'Location TBA';
+                        
+                        // Handle image URL properly
+                        let imageUrl = 'images/default-event.jpg';
+                        if (event.imageUrl) {
+                            // If it's a full URL, use it as is
+                            if (event.imageUrl.startsWith('http')) {
+                                imageUrl = event.imageUrl;
+                            } else {
+                                // If it's a relative path, prepend the backend URL
+                                imageUrl = `http://localhost:5000/${event.imageUrl}`;
+                            }
+                        } else if (event.stadiumId?.imageUrl) {
+                            // If it's a full URL, use it as is
+                            if (event.stadiumId.imageUrl.startsWith('http')) {
+                                imageUrl = event.stadiumId.imageUrl;
+                            } else {
+                                // If it's a relative path, prepend the backend URL
+                                imageUrl = `http://localhost:5000/${event.stadiumId.imageUrl}`;
+                            }
+                        }
+                        
+                        // Format the date
+                        const eventDate = new Date(event.date).toLocaleDateString('en-IN', {
+                            year: 'numeric',
+                            month: 'long', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
+                        // Generate random color for event card if no image
+                        const bgColorStyle = !imageUrl ? 
+                            `background-color: #${Math.floor(Math.random()*16777215).toString(16)};` : '';
+                        
+                        const eventCard = document.createElement("div");
+                        eventCard.className = "event-card";
+                        eventCard.innerHTML = `
+                            <div class="event-image" style="${bgColorStyle} background-image: url('${imageUrl}')"></div>
+                            <div class="event-details">
+                                <div class="event-date">${eventDate}</div>
+                                <h3 class="event-name">${event.name}</h3>
+                                <div class="event-location">📍 ${stadiumName}, ${stadiumLocation}</div>
+                                <div class="event-price">₹${event.ticketPrice}</div>
+                                <a href="event-details.html?id=${event._id}" class="btn btn-primary btn-full">View Event</a>
+                            </div>
+                        `;
+                        eventList.appendChild(eventCard);
+                    });
+                    
+                } catch (error) {
+                    console.error("Error loading events:", error);
+                    loadingIndicator.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'Error loading events. Please try again later.';
+                }
+            }
+        });
+    </script>
+    
+    <!-- Then load your events.js file for initial event loading -->
+    <script src="events.js"></script>
+</body>
+</html>

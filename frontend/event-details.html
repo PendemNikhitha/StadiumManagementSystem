@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details | InstantTicketHub</title>
+    <link rel="stylesheet" href="welstyles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Instant<span>TicketHub</span></div>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="venues.html">Venues</a></li>
+                    <li><a href="my-tickets.html">My Tickets</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="events.html">Events</a> &gt; <span id="event-breadcrumb">Event Details</span>
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading event details...</p>
+            </div>
+            
+            <div class="event-details-container" id="event-details-container" style="display: none;">
+                <div class="event-header">
+                    <div class="event-image-container">
+                        <img id="event-image" src="" alt="Event Image">
+                    </div>
+                    <div class="event-header-info">
+                        <h1 id="event-name" class="event-title"></h1>
+                        <div class="event-meta">
+                            <div class="event-datetime">
+                                <i class="fas fa-calendar"></i>
+                                <span id="event-date"></span>
+                            </div>
+                            <div class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="event-venue"></span>,
+                                <span id="event-location"></span>
+                            </div>
+                            <div class="event-category">
+                                <i class="fas fa-tag"></i>
+                                <span id="event-category"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="event-body">
+                    <div class="event-main-info">
+                        <div class="section-title">About This Event</div>
+                        <p id="event-description"></p>
+                        
+                        <div class="section-title">Venue Information</div>
+                        <div class="venue-details">
+                            <div class="venue-info">
+                                <h3 id="stadium-name"></h3>
+                                <p id="stadium-address"></p>
+                                <p id="stadium-description"></p>
+                                <div class="venue-facilities" id="stadium-facilities">
+                                    <!-- Facilities will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-booking">
+                        <div class="ticket-box">
+                            <div class="ticket-price">
+                                <span class="price-label">Price per ticket:</span>
+                                <span class="price-value" id="ticket-price"></span>
+                            </div>
+                            <div class="ticket-availability">
+                                <span id="tickets-remaining"></span> tickets remaining
+                            </div>
+                            <div class="ticket-quantity">
+                                <label for="ticket-quantity">Number of tickets:</label>
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn" id="decrease-quantity">−</button>
+                                    <input type="number" id="ticket-quantity" value="1" min="1" max="10">
+                                    <button class="quantity-btn" id="increase-quantity">+</button>
+                                </div>
+                            </div>
+                            <div class="total-price">
+                                <span>Total Amount:</span>
+                                <span id="total-price"></span>
+                            </div>
+                            <button class="btn btn-primary btn-full" id="book-tickets">Book Now</button>
+                            <div class="booking-notes">
+                                <p>* Maximum 10 tickets per booking</p>
+                                <p>* All sales are final</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="related-events">
+                    <h2>Similar Events</h2>
+                    <div class="related-events-grid" id="related-events">
+                        <!-- Related events will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Booking Confirmation Modal -->
+            <div id="booking-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Confirm Booking</h2>
+                    <div id="booking-details">
+                        <p><strong>Event:</strong> <span id="modal-event-name"></span></p>
+                        <p><strong>Date:</strong> <span id="modal-event-date"></span></p>
+                        <p><strong>Venue:</strong> <span id="modal-venue-name"></span></p>
+                        <p><strong>Tickets:</strong> <span id="modal-ticket-quantity"></span></p>
+                        <p><strong>Total Price:</strong> <span id="modal-total-price"></span></p>
+                    </div>
+                    <div class="payment-options">
+                        <h3>Select Payment Method</h3>
+                        <div class="payment-methods">
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="credit-card" checked>
+                                <span>Credit/Debit Card</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="net-banking">
+                                <span>Net Banking</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="upi">
+                                <span>UPI</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="wallet">
+                                <span>Wallet</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="btn btn-secondary" id="cancel-booking">Cancel</button>
+                        <button class="btn btn-primary" id="confirm-booking">Confirm & Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">Instant<span>TicketHub</span></div>
+                    <p>Your fast track to amazing events.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="venues.html">Venues</a></li>
+                        <li><a href="my-tickets.html">My Tickets</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p>Email: support@instantticket.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 InstantTicketHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="event-details.js"></script>
+</body>
+</html>

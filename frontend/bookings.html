@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookings - InstantTicketHub</title>
+  <link rel="stylesheet" href="welstyles.css">
+  <script defer src="welhoscript.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="logo">InstantTicketHub</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="bookings.html">Bookings</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      </ul>
+      <button class="menu-btn"><i class="fas fa-bars"></i></button>
+    </nav>
+  </header>
+
+  <!-- Bookings Section -->
+  <section class="content">
+    <h1>My Bookings</h1>
+    <p>You have not booked any tickets yet. Start exploring now!</p>
+    <a href="home.html" class="btn">Browse Events</a>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuBtn = document.querySelector(".menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", function () {
+        navLinks.classList.toggle("active");
+      });
+    });
+  </script>
+
+</body>
+</html>

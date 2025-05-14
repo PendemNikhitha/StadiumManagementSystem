@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Details | InstantTicketHub</title>
+    <link rel="stylesheet" href="welstyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Instant<span>TicketHub</span></div>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="venues.html" class="active">Venues</a></li>
+                    <li><a href="my-tickets.html">My Tickets</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="venues.html">Venues</a> &gt; <span id="venue-breadcrumb">Venue Details</span>
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading venue details...</p>
+            </div>
+            
+            <div class="venue-details-container" id="venue-details-container" style="display: none;">
+                <div class="venue-header">
+                    <div class="venue-image-container">
+                        <img id="venue-image" src="" alt="Venue Image">
+                    </div>
+                    <div class="venue-header-info">
+                        <h1 id="venue-name" class="venue-title"></h1>
+                        <div class="venue-meta">
+                            <div class="venue-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="venue-location"></span>
+                            </div>
+                            <div class="venue-capacity">
+                                <i class="fas fa-users"></i>
+                                <span id="venue-capacity"></span> seats
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="venue-body">
+                    <div class="venue-description-section">
+                        <h2>About This Venue</h2>
+                        <p id="venue-description"></p>
+                        
+                        <div class="venue-facilities-section">
+                            <h3>Facilities</h3>
+                            <div class="facilities-grid" id="venue-facilities">
+                                <!-- Facilities will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="venue-events-section">
+                        <h2>Upcoming Events</h2>
+                        <div class="events-grid" id="venue-events">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">Instant<span>TicketHub</span></div>
+                    <p>Your premier destination for venue bookings</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="venues.html">Venues</a></li>
+                        <li><a href="my-tickets.html">My Tickets</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@instantticket.com</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 InstantTicketHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="venue-details.js"></script>
+</body>
+</html> 
